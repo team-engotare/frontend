@@ -1,0 +1,13 @@
+.header {
+    background-color:#DF8530;
+  }
+  
+  .header h1 {
+    color: #333333;
+    margin: 0;
+  } 
+  
+.header p {
+    color: #777777;
+    margin: 0;
+  }
