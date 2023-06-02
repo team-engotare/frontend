@@ -1,20 +1,27 @@
-// import React from "react";
-// import { AppBar, Toolbar,Typography } from '@mui/material';
-// import '../components/Header.css';
+import React from "react";
+import { styled } from '@mui/system';
 
-// const Header = () =>{
-//     return(
-//         <div>
-//          <AppBar position="static" className="header">
-//         <Toolbar>
-//           <Typography variant="h6">
-//             My Header
-//           </Typography>
-//         </Toolbar>
-//       </AppBar>
+import { AppBar, Toolbar } from '@mui/material';
 
-//         </div>
-//     )
-// }
+const StyledAppBar = styled(AppBar)({
+    // Add your styles here
+    backgroundColor: '#DF8530',
+  });
+  
 
-// export default Header;
+  const StyledToolbar = styled(Toolbar)({
+    // Add your styles here
+    justifyContent: 'space-between',
+  });
+  
+const Header = () =>{
+    return(
+        <StyledAppBar position="fixed">
+        <StyledToolbar>
+          {/* Add your content here */}
+        </StyledToolbar>
+      </StyledAppBar>
+    )
+}
+
+export default Header;
