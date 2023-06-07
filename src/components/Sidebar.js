@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/system';
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Dashboard, Collections, StackedBarChart, BarChart } from '@mui/icons-material';
+import lion from '../components/images/lion-logo.png';
 
 const StyledDrawer = styled(Drawer)`
   width: 229px;
@@ -10,37 +12,123 @@ const StyledDrawer = styled(Drawer)`
 `;
 const StyledList = styled(List)`
   padding: 10px;
-  margin-top:60px;
+  margin-top: 62px;
 `;
 
 const StyledListItem = styled(ListItem)`
-&:hover {
-  background-color: #DF8530;
-  & .MuiListItemText-primary {
-    color: #ffff;
+  &.Mui-selected {
+    background-color: #DF8530;
   }
-}  
+
+  &:hover {
+    background-color: #DF8530;
+    & .MuiListItemText-primary {
+      color: #ffffff;
+    }
+  }
+  padding-top:15px;
+  margin-top: 10px;
 `;
+
 const StyledListItemText = styled(ListItemText)`
-  color:#8E5315;
+  color: #8E5315;
 
+  &.Mui-selected {
+    color: #ffffff;
+  }
 `;
 
-const Sidebar = () => {
+const StyledDashboard = styled(Dashboard)`
+  color: #F5DAC1;
+  margin-right: 9px;
+  height: 21px;
+  margin-bottom: 3px;
+`;
+
+const StyledCollections = styled(Collections)`
+  color: #F5DAC1;
+  margin-right: 9px;
+  height: 21px;
+  margin-bottom: 3px;
+`;
+
+const StyledStackedBarChart = styled(StackedBarChart)`
+  color: #F5DAC1;
+  margin-right: 9px;
+  height: 21px;
+  margin-bottom: 3px;
+`;
+
+const StyledBarChart = styled(BarChart)`
+  color: #F5DAC1;
+  margin-right: 9px;
+  height: 21px;
+  margin-bottom: 3px;
+`;
+
+const StyledLogo = styled('img')({
+  marginRight: '8px',
+  marginLeft: '-9px',
+  position: 'fixed',
+  height: '57px',
+  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)',
+  borderBottom: '1px solid rgba(0, 0, 0, 0.4)',
+  width: '235px',
+  padding: '2px',
+  marginTop: '-70px',
+  marginBottom: '54px',
+  
+});
+
+
+const Sidebar = ({ onOptionClick }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleItemClick = (option) => {
+    setSelectedOption(option);
+    onOptionClick(option);
+  };
+
   return (
     <StyledDrawer variant="permanent" anchor="left">
+
       <StyledList>
-        <StyledListItem button>
+      <StyledLogo src={lion} alt="Lion-logo" />
+
+
+        <StyledListItem
+          button
+          selected={selectedOption === 'Dashboard'}
+          onClick={() => handleItemClick('Dashboard')}
+        >
+          <StyledDashboard />
           <StyledListItemText primary="Dashboard" />
         </StyledListItem>
-        <StyledListItem button>
+
+        <StyledListItem
+          button
+          selected={selectedOption === 'Gallery'}
+          onClick={() => handleItemClick('Gallery')}
+        >
+          <StyledCollections />
           <StyledListItemText primary="Gallery" />
         </StyledListItem>
-        <StyledListItem button>
-          <StyledListItemText primary="Records" />
+
+        <StyledListItem
+          button
+          selected={selectedOption === 'Records'}
+          onClick={() => handleItemClick('Records')}
+        >
+          <StyledStackedBarChart />
+          <StyledListItemText primary="Records" />  
         </StyledListItem>
-    
-        <StyledListItem button>
+
+        <StyledListItem
+          button
+          selected={selectedOption === 'Statistics'}
+          onClick={() => handleItemClick('Statistics')}
+        >
+          <StyledBarChart />
           <StyledListItemText primary="Statistics" />
         </StyledListItem>
       </StyledList>
