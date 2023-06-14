@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from '@mui/system';
 import { Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { Dashboard, Collections, StackedBarChart, BarChart } from '@mui/icons-material';
 import lion from '../components/images/lion-logo.png';
+import { Link } from 'react-router-dom';
 
 const StyledDrawer = styled(Drawer)`
   width: 229px;
@@ -10,6 +11,7 @@ const StyledDrawer = styled(Drawer)`
     width: 240px;
   }
 `;
+
 const StyledList = styled(List)`
   padding: 10px;
   margin-top: 62px;
@@ -26,7 +28,7 @@ const StyledListItem = styled(ListItem)`
       color: #ffffff;
     }
   }
-  padding-top:15px;
+  padding-top: 15px;
   margin-top: 10px;
 `;
 
@@ -77,28 +79,22 @@ const StyledLogo = styled('img')({
   padding: '2px',
   marginTop: '-70px',
   marginBottom: '54px',
-  
 });
 
-
 const Sidebar = ({ onOptionClick }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
   const handleItemClick = (option) => {
-    setSelectedOption(option);
     onOptionClick(option);
   };
 
   return (
     <StyledDrawer variant="permanent" anchor="left">
-
       <StyledList>
-      <StyledLogo src={lion} alt="Lion-logo" />
-
+        <StyledLogo src={lion} alt="Lion-logo" />
 
         <StyledListItem
           button
-          selected={selectedOption === 'Dashboard'}
+          component={Link}
+          to="/"
           onClick={() => handleItemClick('Dashboard')}
         >
           <StyledDashboard />
@@ -107,7 +103,8 @@ const Sidebar = ({ onOptionClick }) => {
 
         <StyledListItem
           button
-          selected={selectedOption === 'Gallery'}
+          component={Link}
+          to="/gallery"
           onClick={() => handleItemClick('Gallery')}
         >
           <StyledCollections />
@@ -116,16 +113,18 @@ const Sidebar = ({ onOptionClick }) => {
 
         <StyledListItem
           button
-          selected={selectedOption === 'Records'}
+          component={Link}
+          to="/records"
           onClick={() => handleItemClick('Records')}
         >
           <StyledStackedBarChart />
-          <StyledListItemText primary="Records" />  
+          <StyledListItemText primary="Records" />
         </StyledListItem>
 
         <StyledListItem
           button
-          selected={selectedOption === 'Statistics'}
+          component={Link}
+          to="/statistics"
           onClick={() => handleItemClick('Statistics')}
         >
           <StyledBarChart />

@@ -13,6 +13,17 @@
   import Eselenkei_7 from '../components/images/Engonyanai Pride/card_image_seven.png';
   import Eselenkei_8 from '../components/images/Engonyanai Pride/card_image_eight.png';
 
+  import Liona from '../components/images/Marsh Pride/liona_1.png';
+  import Liona_2 from '../components/images/Marsh Pride/liona_2.png';
+  import Liona_3 from '../components/images/Marsh Pride/liona_3.png';
+  import Liona_4 from '../components/images/Marsh Pride/liona_4.png';
+  import Liona_5 from '../components/images/Marsh Pride/liona_5.png';
+  import Liona_6 from '../components/images/Marsh Pride/liona_6.png';
+  import Liona_7 from '../components/images/Marsh Pride/liona_7.png';
+  import Liona_8 from '../components/images/Marsh Pride/liona_8.png';
+
+
+
 
   const StyledSearchBar = styled(TextField)({
     marginLeft: "292px",
@@ -142,11 +153,31 @@
 
       // Add more card data here
     ];
-    const [showAllCards, setShowAllCards] = useState(false);
 
-    const handleSeeAllClick = () => {
-      setShowAllCards(true);
+    const marshPrideCardData = [
+      { image: Liona, title: "Liona", description: "24 years old" },
+      { image: Liona_2, title: "Liona", description: "24 years old" },
+      { image: Liona_3, title: "Liona", description: "24 years old" },
+      { image: Liona_4, title: "Liona", description: "24 years old" },
+      { image: Liona_5, title: "Liona", description: "24 years old" },
+      { image: Liona_6, title: "Liona", description: "24 years old" },
+      { image: Liona_7, title: "Liona", description: "24 years old" },
+      { image: Liona_8, title: "Liona", description: "24 years old" },
+
+      // Add more card data here
+    ];
+
+    const [showAllEngonyanaCards, setShowAllEngonyanaCards] = useState(false);
+    const [showAllMarshPrideCards, setShowAllMarshPrideCards] = useState(false);
+
+    const handleEngonyanaSeeAllClick = () => {
+      setShowAllEngonyanaCards(true);
     };
+
+    const handleMarshPrideSeeAllClick = () => {
+      setShowAllMarshPrideCards(true);
+    };
+  
     return (
       <div>
         <StyledH1 variant="h1">Existing Lions Gallery</StyledH1>
@@ -179,7 +210,7 @@
           }}
         >
 
-          {cardData.slice(0, showAllCards ? cardData.length : 4).map((card, index) => (
+          {cardData.slice(0, showAllEngonyanaCards ? cardData.length : 4).map((card, index) => (
 
             <StyledCard key={index}>
               <StyledCardContent>
@@ -193,10 +224,11 @@
                 </Overlay>
               </StyledCardContent>
             </StyledCard>
+
           ))}
 
 
-        {cardData.slice(4, showAllCards ? cardData.length : 8).map((card, index) => (
+        {cardData.slice(4, showAllEngonyanaCards ? cardData.length : 8).map((card, index) => (
             <StyledCard key={index}>
             <StyledCardContent>
                 <StyledCardMedia component="img" alt="Image" image={card.image} />
@@ -212,13 +244,68 @@
           ))}
 
           </div>
-          {!showAllCards && (
-        <SeeAllButton variant="outlined" onClick={handleSeeAllClick}>
+         {!showAllEngonyanaCards && (
+        <SeeAllButton variant="outlined" onClick={handleEngonyanaSeeAllClick} style={{ marginTop: "20px" }}>
           See All <ArrowIcon $color="#DF8530" $marginLeft="-3px" />{" "}
           <ArrowIcon $color="#8E5315" $marginLeft="-19px" />
         </SeeAllButton>
       )}
-      
+
+
+      <StyledH2 variant="h2">Marsh Pride</StyledH2>
+
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      marginLeft: "320px",
+      marginTop: "-20px",
+      // flexDirection: "column"
+    }}
+  >
+
+  {marshPrideCardData.slice(0, showAllMarshPrideCards ? marshPrideCardData.length : 4).map((card, index) => (
+
+    <StyledCard key={index}>
+      <StyledCardContent>
+        <StyledCardMedia component="img" alt="Image" image={card.image} />
+        <Overlay>
+          <Title variant="h5">{card.title}</Title>
+          <Description variant="body1">{card.description}</Description>
+          <EditIconButton>
+            <EditNote />
+          </EditIconButton>
+        </Overlay>
+      </StyledCardContent>
+    </StyledCard>
+
+  ))}
+
+
+{marshPrideCardData.slice(4, showAllMarshPrideCards ? marshPrideCardData.length : 8).map((card, index) => (
+    <StyledCard key={index}>
+    <StyledCardContent>
+        <StyledCardMedia component="img" alt="Image" image={card.image} />
+        <Overlay>
+          <Title variant="h5">{card.title}</Title>
+          <Description variant="body1">{card.description}</Description>
+          <EditIconButton>
+            <EditNote />
+          </EditIconButton>
+        </Overlay>
+      </StyledCardContent>
+    </StyledCard>
+  ))}
+
+  </div>
+
+  {!showAllMarshPrideCards && (
+        <SeeAllButton variant="outlined" onClick={handleMarshPrideSeeAllClick} style={{ marginTop: "560px" }}>
+          See All <ArrowIcon $color="#DF8530" $marginLeft="-3px" />{" "}
+          <ArrowIcon $color="#8E5315" $marginLeft="-19px" />
+        </SeeAllButton>
+      )}
+
       </div>
     );
   };

@@ -1,32 +1,35 @@
-import React,{useState} from 'react';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
-import Gallery from './components/Gallery';
-import Records from './components/Records';
-import Statistics from './components/Statistics';
+    import React from 'react';
+    import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+    import Header from './components/Header';
+    import Sidebar from './components/Sidebar';
+    import Dashboard from './components/Dashboard';
+    import Gallery from './components/Gallery';
+    import Records from './components/Records';
+    import Statistics from './components/Statistics';
+    import NextImagePage from './components/NextImagePage';
 
-function App() {
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-  };
-  return (
-      <div className="App">
-        <Header/>
-        <Sidebar onOptionClick={handleOptionClick}/>
+    
+    function App() {
+      return (
+        <Router>
+          <div className="App">
+            <Header />
+            <Sidebar />
       
-        <div style={{ marginTop: '20px' }}>
-        {selectedOption === 'Dashboard' && <Dashboard />}
-        {selectedOption === 'Gallery' && <Gallery/>}
-        {selectedOption === 'Records' && <Records />}
-        {selectedOption === 'Statistics' && <Statistics/>}
+            <div style={{ marginTop: '20px' }}>
+              <Routes>
+                <Route path="/" exact element={<Dashboard />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/records" element={<Records />} />
+                <Route path="/statistics" element={<Statistics />} />
+                <Route path="/imagepage" component={<NextImagePage/>} />
 
-      </div>
-        
-      </div>
-  );
-}
-
-export default App;
+              </Routes>
+            </div>
+          </div>
+        </Router>
+      );
+    }
+    
+    export default App;
+    
