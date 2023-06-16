@@ -3,6 +3,7 @@
   import { Search, EditNote,ChevronRight } from "@mui/icons-material";
   import { styled } from "@mui/system";
   import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+  import { Link } from "react-router-dom";
 
   import Eselenkei from "../components/images/Engonyanai Pride/card_image_one.png";
   import Eselenkei_2 from "../components/images/Engonyanai Pride/card_image_two.png";
@@ -211,8 +212,8 @@
         >
 
           {cardData.slice(0, showAllEngonyanaCards ? cardData.length : 4).map((card, index) => (
-
-            <StyledCard key={index}>
+      <StyledCard key={index}>
+               <Link to="/imagepage">
               <StyledCardContent>
                 <StyledCardMedia component="img" alt="Image" image={card.image} />
                 <Overlay>
@@ -223,6 +224,8 @@
                   </EditIconButton>
                 </Overlay>
               </StyledCardContent>
+              </Link>
+
             </StyledCard>
 
           ))}
@@ -230,6 +233,7 @@
 
         {cardData.slice(4, showAllEngonyanaCards ? cardData.length : 8).map((card, index) => (
             <StyledCard key={index}>
+                 <Link to="/imagepage">
             <StyledCardContent>
                 <StyledCardMedia component="img" alt="Image" image={card.image} />
                 <Overlay>
@@ -240,6 +244,7 @@
                   </EditIconButton>
                 </Overlay>
               </StyledCardContent>
+              </Link>
             </StyledCard>
           ))}
 
@@ -267,6 +272,8 @@
   {marshPrideCardData.slice(0, showAllMarshPrideCards ? marshPrideCardData.length : 4).map((card, index) => (
 
     <StyledCard key={index}>
+      <Link to="/imagepage2">
+
       <StyledCardContent>
         <StyledCardMedia component="img" alt="Image" image={card.image} />
         <Overlay>
@@ -277,6 +284,8 @@
           </EditIconButton>
         </Overlay>
       </StyledCardContent>
+      </Link>
+
     </StyledCard>
 
   ))}
@@ -284,6 +293,8 @@
 
 {marshPrideCardData.slice(4, showAllMarshPrideCards ? marshPrideCardData.length : 8).map((card, index) => (
     <StyledCard key={index}>
+      <Link to="/imagepage2">
+
     <StyledCardContent>
         <StyledCardMedia component="img" alt="Image" image={card.image} />
         <Overlay>
@@ -294,6 +305,8 @@
           </EditIconButton>
         </Overlay>
       </StyledCardContent>
+      </Link>
+
     </StyledCard>
   ))}
 

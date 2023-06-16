@@ -6,7 +6,8 @@
     import Gallery from './components/Gallery';
     import Records from './components/Records';
     import Statistics from './components/Statistics';
-    import NextImagePage from './components/NextImagePage';
+    import EngonyanaImagePage from './components/EngonyanaImagePage';
+    import MarshImagePage from './components/MarshImagePage';
 
     
     function App() {
@@ -22,7 +23,9 @@
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/records" element={<Records />} />
                 <Route path="/statistics" element={<Statistics />} />
-                <Route path="/imagepage" component={<NextImagePage/>} />
+                <Route path="/imagepage" element={<EngonyanaImagePage />} />
+                <Route path="/imagepage2" element={<MarshImagePage />} />
+
 
               </Routes>
             </div>
