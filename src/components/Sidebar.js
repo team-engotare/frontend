@@ -1,9 +1,14 @@
-import React from 'react';
-import { styled } from '@mui/system';
-import { Drawer, List, ListItem, ListItemText } from '@mui/material';
-import { Dashboard, Collections, StackedBarChart, BarChart } from '@mui/icons-material';
-import lion from '../components/images/lion-logo.png';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { styled } from "@mui/system";
+import { Drawer, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Dashboard,
+  Collections,
+  StackedBarChart,
+  BarChart,
+} from "@mui/icons-material";
+import lion from "../components/images/lion-logo.png";
+import { Link } from "react-router-dom";
 
 const StyledDrawer = styled(Drawer)`
   width: 229px;
@@ -19,11 +24,11 @@ const StyledList = styled(List)`
 
 const StyledListItem = styled(ListItem)`
   &.Mui-selected {
-    background-color: #DF8530;
+    background-color: #df8530;
   }
 
   &:hover {
-    background-color: #DF8530;
+    background-color: #df8530;
     & .MuiListItemText-primary {
       color: #ffffff;
     }
@@ -33,7 +38,7 @@ const StyledListItem = styled(ListItem)`
 `;
 
 const StyledListItemText = styled(ListItemText)`
-  color: #8E5315;
+  color: #8e5315;
 
   &.Mui-selected {
     color: #ffffff;
@@ -41,51 +46,86 @@ const StyledListItemText = styled(ListItemText)`
 `;
 
 const StyledDashboard = styled(Dashboard)`
-  color: #F5DAC1;
+  color: #f5dac1;
   margin-right: 9px;
   height: 21px;
   margin-bottom: 3px;
 `;
 
 const StyledCollections = styled(Collections)`
-  color: #F5DAC1;
+  color: #f5dac1;
   margin-right: 9px;
   height: 21px;
   margin-bottom: 3px;
 `;
 
 const StyledStackedBarChart = styled(StackedBarChart)`
-  color: #F5DAC1;
+  color: #f5dac1;
   margin-right: 9px;
   height: 21px;
   margin-bottom: 3px;
 `;
 
 const StyledBarChart = styled(BarChart)`
-  color: #F5DAC1;
+  color: #f5dac1;
   margin-right: 9px;
   height: 21px;
   margin-bottom: 3px;
 `;
 
-const StyledLogo = styled('img')({
-  marginRight: '8px',
-  marginLeft: '-9px',
-  position: 'fixed',
-  height: '57px',
-  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)',
-  borderBottom: '1px solid rgba(0, 0, 0, 0.4)',
-  width: '235px',
-  padding: '2px',
-  marginTop: '-70px',
-  marginBottom: '54px',
+const StyledLogo = styled("img")({
+  marginRight: "8px",
+  marginLeft: "-9px",
+  position: "fixed",
+  height: "57px",
+  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.4)",
+  borderBottom: "1px solid rgba(0, 0, 0, 0.4)",
+  width: "235px",
+  padding: "2px",
+  marginTop: "-70px",
+  marginBottom: "54px",
 });
 
-const Sidebar = ({ onOptionClick }) => {
-  const handleItemClick = (option) => {
-    onOptionClick(option);
-  };
+// const Sidebar = ({ onOptionClick}) => {
+//   const handleItemClick = (option) => {
+//      onOptionClick(option);
+//    };
 
+{
+  /* START OF UPDATE */
+}
+const Sidebar = ({
+  setNavToDashboard,
+  setNavToGallery,
+  setNavToRecords,
+  setNavToStatistics,
+}) => {
+  const handleItemClick = (NavOption) => {
+    if (NavOption === "Dashboard") {
+      setNavToDashboard(true);
+      setNavToGallery(false);
+      setNavToRecords(false);
+      setNavToStatistics(false);
+    } else if (NavOption === "Gallery") {
+      setNavToDashboard(false);
+      setNavToGallery(true);
+      setNavToRecords(false);
+      setNavToStatistics(false);
+    } else if (NavOption === "Records") {
+      setNavToDashboard(false);
+      setNavToGallery(false);
+      setNavToRecords(true);
+      setNavToStatistics(false);
+    } else if (NavOption === "Statistics") {
+      setNavToDashboard(false);
+      setNavToGallery(false);
+      setNavToRecords(false);
+      setNavToStatistics(true);
+    }
+  };
+  {
+    /* END OF UPDATE */
+  }
   return (
     <StyledDrawer variant="permanent" anchor="left">
       <StyledList>
@@ -95,7 +135,7 @@ const Sidebar = ({ onOptionClick }) => {
           button
           component={Link}
           to="/"
-          onClick={() => handleItemClick('Dashboard')}
+          onClick={() => handleItemClick("Dashboard")}
         >
           <StyledDashboard />
           <StyledListItemText primary="Dashboard" />
@@ -105,7 +145,7 @@ const Sidebar = ({ onOptionClick }) => {
           button
           component={Link}
           to="/gallery"
-          onClick={() => handleItemClick('Gallery')}
+          onClick={() => handleItemClick("Gallery")}
         >
           <StyledCollections />
           <StyledListItemText primary="Gallery" />
@@ -115,7 +155,7 @@ const Sidebar = ({ onOptionClick }) => {
           button
           component={Link}
           to="/records"
-          onClick={() => handleItemClick('Records')}
+          onClick={() => handleItemClick("Records")}
         >
           <StyledStackedBarChart />
           <StyledListItemText primary="Records" />
@@ -125,7 +165,7 @@ const Sidebar = ({ onOptionClick }) => {
           button
           component={Link}
           to="/statistics"
-          onClick={() => handleItemClick('Statistics')}
+          onClick={() => handleItemClick("Statistics")}
         >
           <StyledBarChart />
           <StyledListItemText primary="Statistics" />
