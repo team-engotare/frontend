@@ -1,11 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
-import {
-  Dashboard,
-  Collections,
-  StackedBarChart,
-} from "@mui/icons-material";
+import { Dashboard, Collections, StackedBarChart } from "@mui/icons-material";
 import lion from "../components/images/lion-logo.png";
 import { Link } from "react-router-dom";
 
@@ -93,25 +89,16 @@ const StyledLogo = styled("img")({
 // {
 //   /* START OF UPDATE */
 // }
-const Sidebar = ({
-  setNavToDashboard,
-  setNavToGallery,
-  setNavToRecords,
-}) => {
+const Sidebar = ({ setNavToDashboard, setNavToGallery, setNavToRecords }) => {
   const handleItemClick = (NavOption) => {
+    console.log(NavOption);
     if (NavOption === "Dashboard") {
-      setNavToDashboard(true);
-      setNavToGallery(false);
-      setNavToRecords(false);
+      setNavToDashboard();
     } else if (NavOption === "Gallery") {
-      setNavToDashboard(false);
-      setNavToGallery(true);
-      setNavToRecords(false);
+      setNavToGallery();
     } else if (NavOption === "Records") {
-      setNavToDashboard(false);
-      setNavToGallery(false);
-      setNavToRecords(true);
-    } 
+      setNavToRecords();
+    }
   };
   // {
   //   /* END OF UPDATE */

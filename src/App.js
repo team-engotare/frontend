@@ -15,7 +15,7 @@ function App() {
 
   const handleNavToDashboard = () => {
     console.log("Navigating to Dashboard");
-    setNavToDashboard(prevState => !prevState);
+    setNavToDashboard((prevState) => !prevState);
     setNavToGallery(false);
     setNavToRecords(false);
   };
@@ -23,7 +23,7 @@ function App() {
   const handleNavToGallery = () => {
     console.log("Navigating to Gallery");
     setNavToDashboard(false);
-    setNavToGallery(prevState => !prevState);
+    setNavToGallery((prevState) => !prevState);
     setNavToRecords(false);
   };
 
@@ -31,7 +31,7 @@ function App() {
     console.log("Navigating to Records");
     setNavToDashboard(false);
     setNavToGallery(false);
-    setNavToRecords(prevState => !prevState);
+    setNavToRecords((prevState) => !prevState);
   };
 
   return (
@@ -39,9 +39,9 @@ function App() {
       <div className="App">
         <Header />
         <Sidebar
-          handleNavToDashboard={handleNavToDashboard}
-          handleNavToGallery={handleNavToGallery}
-          handleNavToRecords={handleNavToRecords}
+          setNavToDashboard={handleNavToDashboard}
+          setNavToGallery={handleNavToGallery}
+          setNavToRecords={handleNavToRecords}
         />
 
         <div style={{ marginTop: "20px" }}>
