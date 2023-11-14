@@ -182,11 +182,23 @@ const Gallery = () => {
     setShowAllMarshPrideCards(true);
   };
 
-  const handleCardClick = (event, path) => {
-    event.preventDefault();
-    // Handle card click logic, e.g., navigate programmatically
-    window.location.href = path;
+  // const handleCardClick = (event, path) => {
+  //   console.log('Event:', event);
+    
+  //   if (event && typeof event.preventDefault === 'function') {
+  //     // event.preventDefault();
+  //     console.log('Prevented default');
+  //     // Handle card click logic, e.g., navigate programmatically
+  //     window.location.href = path;
+  //   } else {
+  //     console.error('Event or event.preventDefault is not a function:', event);
+  //   }
+  // };
+  
+  const handleCardClick = (path) => {
+    // No need for event.preventDefault() here
   };
+  
 
   return (
     <div>
