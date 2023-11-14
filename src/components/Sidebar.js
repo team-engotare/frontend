@@ -5,7 +5,6 @@ import {
   Dashboard,
   Collections,
   StackedBarChart,
-  BarChart,
 } from "@mui/icons-material";
 import lion from "../components/images/lion-logo.png";
 import { Link } from "react-router-dom";
@@ -66,12 +65,12 @@ const StyledStackedBarChart = styled(StackedBarChart)`
   margin-bottom: 3px;
 `;
 
-const StyledBarChart = styled(BarChart)`
-  color: #f5dac1;
-  margin-right: 9px;
-  height: 21px;
-  margin-bottom: 3px;
-`;
+// const StyledBarChart = styled(BarChart)`
+//   color: #f5dac1;
+//   margin-right: 9px;
+//   height: 21px;
+//   margin-bottom: 3px;
+// `;
 
 const StyledLogo = styled("img")({
   marginRight: "8px",
@@ -91,41 +90,32 @@ const StyledLogo = styled("img")({
 //      onOptionClick(option);
 //    };
 
-{
-  /* START OF UPDATE */
-}
+// {
+//   /* START OF UPDATE */
+// }
 const Sidebar = ({
   setNavToDashboard,
   setNavToGallery,
   setNavToRecords,
-  setNavToStatistics,
 }) => {
   const handleItemClick = (NavOption) => {
     if (NavOption === "Dashboard") {
       setNavToDashboard(true);
       setNavToGallery(false);
       setNavToRecords(false);
-      setNavToStatistics(false);
     } else if (NavOption === "Gallery") {
       setNavToDashboard(false);
       setNavToGallery(true);
       setNavToRecords(false);
-      setNavToStatistics(false);
     } else if (NavOption === "Records") {
       setNavToDashboard(false);
       setNavToGallery(false);
       setNavToRecords(true);
-      setNavToStatistics(false);
-    } else if (NavOption === "Statistics") {
-      setNavToDashboard(false);
-      setNavToGallery(false);
-      setNavToRecords(false);
-      setNavToStatistics(true);
-    }
+    } 
   };
-  {
-    /* END OF UPDATE */
-  }
+  // {
+  //   /* END OF UPDATE */
+  // }
   return (
     <StyledDrawer variant="permanent" anchor="left">
       <StyledList>
@@ -159,16 +149,6 @@ const Sidebar = ({
         >
           <StyledStackedBarChart />
           <StyledListItemText primary="Records" />
-        </StyledListItem>
-
-        <StyledListItem
-          button
-          component={Link}
-          to="/statistics"
-          onClick={() => handleItemClick("Statistics")}
-        >
-          <StyledBarChart />
-          <StyledListItemText primary="Statistics" />
         </StyledListItem>
       </StyledList>
     </StyledDrawer>
