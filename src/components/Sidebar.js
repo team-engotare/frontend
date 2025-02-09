@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { styled } from "@mui/system";
-import { Drawer, List, ListItem, ListItemText } from "@mui/material";
-import { Dashboard, Collections, StackedBarChart } from "@mui/icons-material";
+import { Drawer, List, ListItem, ListItemText, IconButton } from "@mui/material";
+import { Dashboard, Collections, StackedBarChart, Menu, Close, BarChart } from "@mui/icons-material";
 import lion from "../components/images/lion-logo.png";
-import { Link } from "react-router-dom";
 
 const StyledDrawer = styled(Drawer)`
   width: 229px;
+  flex-shrink: 0;
   & .MuiDrawer-paper {
     width: 240px;
+  }
+
+  @media (max-width: 768px) {
+    width: 0;
+    & .MuiDrawer-paper {
+      width: 240px;
+    }
   }
 `;
 
@@ -17,27 +25,20 @@ const StyledList = styled(List)`
   margin-top: 62px;
 `;
 
-const StyledListItem = styled(ListItem)`
-  &.Mui-selected {
-    background-color: #df8530;
-  }
-
-  &:hover {
-    background-color: #df8530;
-    & .MuiListItemText-primary {
-      color: #ffffff;
-    }
-  }
-  padding-top: 15px;
-  margin-top: 10px;
-`;
+const StyledListItem = styled(ListItem, {
+  shouldForwardProp: (prop) => prop !== "active",
+})(({ active }) => ({
+  backgroundColor: active ? "#df8530" : "transparent",
+  "&:hover": {
+    backgroundColor: "#df8530",
+    "& .MuiListItemText-primary": { color: "#ffffff" },
+  },
+  paddingTop: "15px",
+  marginTop: "10px",
+}));
 
 const StyledListItemText = styled(ListItemText)`
   color: #8e5315;
-
-  &.Mui-selected {
-    color: #ffffff;
-  }
 `;
 
 const StyledDashboard = styled(Dashboard)`
@@ -61,84 +62,185 @@ const StyledStackedBarChart = styled(StackedBarChart)`
   margin-bottom: 3px;
 `;
 
-// const StyledBarChart = styled(BarChart)`
-//   color: #f5dac1;
-//   margin-right: 9px;
-//   height: 21px;
-//   margin-bottom: 3px;
-// `;
+const StyledBarChart = styled(BarChart)` /* Icon for Statistics */
+  color: #f5dac1;
+  margin-right: 9px;
+  height: 21px;
+  margin-bottom: 3px;
+`;
 
 const StyledLogo = styled("img")({
   marginRight: "8px",
   marginLeft: "-9px",
   position: "fixed",
   height: "57px",
-  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.4)",
-  borderBottom: "1px solid rgba(0, 0, 0, 0.4)",
   width: "235px",
   padding: "2px",
   marginTop: "-70px",
   marginBottom: "54px",
+  "@media (max-width: 768px)": {
+    display: "none", 
+  },
 });
 
-// const Sidebar = ({ onOptionClick}) => {
-//   const handleItemClick = (option) => {
-//      onOptionClick(option);
-//    };
+// Sidebar
+const Sidebar = ({ setNavToDashboard, setNavToGallery, setNavToRecords, setNavToStatistics }) => {
+  const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-// {
-//   /* START OF UPDATE */
-// }
-const Sidebar = ({ setNavToDashboard, setNavToGallery, setNavToRecords }) => {
+  const toggleDrawer = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   const handleItemClick = (NavOption) => {
-    console.log(NavOption);
     if (NavOption === "Dashboard") {
       setNavToDashboard();
     } else if (NavOption === "Gallery") {
       setNavToGallery();
     } else if (NavOption === "Records") {
       setNavToRecords();
+    } else if (NavOption === "Statistics") {
+      setNavToStatistics();
     }
+    setMobileOpen(false); // Close the drawer after selecting a menu item on mobile.(not sticky*)
   };
-  // {
-  //   /* END OF UPDATE */
-  // }
+
   return (
-    <StyledDrawer variant="permanent" anchor="left">
-      <StyledList>
-        <StyledLogo src={lion} alt="Lion-logo" />
-
-        <StyledListItem
-          button
-          component={Link}
-          to="/"
-          onClick={() => handleItemClick("Dashboard")}
+    <>
+      {/* Menu Button for Mobile (Hidden When Sidebar is Open) */}
+      {!mobileOpen && (
+        <IconButton
+          onClick={toggleDrawer}
+          sx={{
+            display: { xs: "block", md: "none" },
+            position: "fixed",
+            top: 10,
+            left: 10,
+            zIndex: 1201,
+            color: "#8e5315",
+          }}
         >
-          <StyledDashboard />
-          <StyledListItemText primary="Dashboard" />
-        </StyledListItem>
+          <Menu />
+        </IconButton>
+      )}
 
-        <StyledListItem
-          button
-          component={Link}
-          to="/gallery"
-          onClick={() => handleItemClick("Gallery")}
-        >
-          <StyledCollections />
-          <StyledListItemText primary="Gallery" />
-        </StyledListItem>
+      {/* Permanent Drawer for Large Screens */}
+      <StyledDrawer variant="permanent" anchor="left" sx={{ display: { xs: "none", md: "block" } }}>
+        <StyledList>
+          <StyledLogo src={lion} alt="Lion-logo" />
+          <StyledListItem
+            button
+            component={Link}
+            to="/"
+            active={location.pathname === "/"}
+            onClick={() => handleItemClick("Dashboard")}
+          >
+            <StyledDashboard />
+            <StyledListItemText primary="Dashboard" />
+          </StyledListItem>
 
-        <StyledListItem
-          button
-          component={Link}
-          to="/records"
-          onClick={() => handleItemClick("Records")}
+          <StyledListItem
+            button
+            component={Link}
+            to="/gallery"
+            active={location.pathname === "/gallery"}
+            onClick={() => handleItemClick("Gallery")}
+          >
+            <StyledCollections />
+            <StyledListItemText primary="Gallery" />
+          </StyledListItem>
+
+          <StyledListItem
+            button
+            component={Link}
+            to="/records"
+            active={location.pathname === "/records"}
+            onClick={() => handleItemClick("Records")}
+          >
+            <StyledStackedBarChart />
+            <StyledListItemText primary="Records" />
+          </StyledListItem>
+
+          <StyledListItem
+            button
+            component={Link}
+            to="/statistics"
+            active={location.pathname === "/statistics"}
+            onClick={() => handleItemClick("Statistics")}
+          >
+            <StyledBarChart />
+            <StyledListItemText primary="Statistics" />
+          </StyledListItem>
+        </StyledList>
+      </StyledDrawer>
+
+      {/* Temporary Drawer for Mobile Screens */}
+      <Drawer
+        anchor="left"
+        open={mobileOpen}
+        onClose={toggleDrawer}
+        sx={{ display: { xs: "block", md: "none" } }}
+      >
+        {/* Close Button Inside Drawer */}
+        <IconButton
+          onClick={toggleDrawer}
+          sx={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            color: "#8e5315",
+          }}
         >
-          <StyledStackedBarChart />
-          <StyledListItemText primary="Records" />
-        </StyledListItem>
-      </StyledList>
-    </StyledDrawer>
+          <Close />
+        </IconButton>
+
+        <StyledList sx={{ marginTop: "40px" }}> {/* Ensure spacing below close button */}
+          <StyledListItem
+            button
+            component={Link}
+            to="/"
+            active={location.pathname === "/"}
+            onClick={() => handleItemClick("Dashboard")}
+          >
+            <StyledDashboard />
+            <StyledListItemText primary="Dashboard" />
+          </StyledListItem>
+
+          <StyledListItem
+            button
+            component={Link}
+            to="/gallery"
+            active={location.pathname === "/gallery"}
+            onClick={() => handleItemClick("Gallery")}
+          >
+            <StyledCollections />
+            <StyledListItemText primary="Gallery" />
+          </StyledListItem>
+
+          <StyledListItem
+            button
+            component={Link}
+            to="/records"
+            active={location.pathname === "/records"}
+            onClick={() => handleItemClick("Records")}
+          >
+            <StyledStackedBarChart />
+            <StyledListItemText primary="Records" />
+          </StyledListItem>
+
+          <StyledListItem
+            button
+            component={Link}
+            to="/statistics"
+            active={location.pathname === "/statistics"}
+            onClick={() => handleItemClick("Statistics")}
+          >
+            <StyledBarChart />
+            <StyledListItemText primary="Statistics" />
+          </StyledListItem>
+        </StyledList>
+      </Drawer>
+    </>
   );
 };
 

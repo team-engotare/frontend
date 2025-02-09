@@ -1,13 +1,12 @@
 import React from "react";
 import { styled } from '@mui/system';
-import { Typography, Button, Card } from '@mui/material';
+import { Typography, Button, Card, useMediaQuery } from '@mui/material';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, Label, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import LionIcon from '../components/images/lionn.svg';
 import CountUp from "react-countup";
 
-
-
+// Sample Data
 const data = [
   { age: 5, count: 10 },
   { age: 10, count: 15 },
@@ -23,238 +22,147 @@ const lionData = [
   { category: 'Unidentified Lions', count: 295 },
 ];
 
+const pieChartData = [
+  { name: 'Male', value: 75 },
+  { name: 'Female', value: 25 },
+];
+
+// **Styled Components**
+const StyledContainer = styled('div')(({ isSmallScreen, isLargeScreen }) => ({
+  padding: isSmallScreen ? '20px' : '40px',
+  marginLeft: isLargeScreen ? '260px' : '0px', // Space for expanded sidebar on large screens
+  transition: 'margin-left 0.3s ease',
+}));
+
 const StyledH1 = styled(Typography)({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  marginTop: '89px',
-  marginLeft: '273px',
-  fontSize: '30px',
-  fontFamily: 'cursive',
+  fontSize: '2rem',
+  fontWeight: 'bold',
+  marginBottom: '10px',
+  textAlign: 'center',
 });
+
 const StyledH2 = styled(Typography)({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  marginTop: '29px',
-  marginLeft: '273px',
-  fontSize: '24px',
-  fontFamily: 'cursive',
+  fontSize: '1.5rem',
+  textAlign: 'center',
+  color: '#6A3E10',
 });
 
 const StyledButton = styled(Button)({
+  backgroundColor: '#8E5315',
+  color: 'white',
+  padding: '10px 20px',
+  margin: '20px auto',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginLeft: '443px',
-  backgroundColor: '#8E5315',
-  width: '382px',
-  paddingTop: '8px',
-  paddingBottom: '6px',
-  paddingRight: '1px',
-  paddingLeft: '1px',
-  marginTop: '35px',
-  marginBottom: '25px',
-  textAlign: 'center',
-  color: 'white',
-  whiteSpace: 'nowrap',
+  width: '90%',
+  maxWidth: '400px',
   '&:hover': {
-    backgroundColor: 'darkbrown',
+    backgroundColor: '#703e10',
   },
-});
-
-const StyledArrowCircleUpIcon = styled(ArrowCircleUpIcon)({
-  color: 'white',
-  boxShadow: '0 0 0 2px darkbrown',
-  borderRadius: '50%',
-});
-
-const StyledBarChart = styled(BarChart)({
-  marginTop: '75px',
 });
 
 const StyledCard = styled(Card)({
   backgroundColor: 'white',
-  marginTop: '20px',
-  marginLeft: '272px',
   padding: '20px',
-});
-
-const StyledLionCard = styled(Card)({
-  backgroundColor: 'white',
-  marginTop: '20px',
-  width: '270px',
-  marginLeft: '20px',
-  padding: '20px',
-  display: 'flex',
-  alignItems: 'center', // Align items to the center
+  boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+  borderRadius: '10px',
 });
 
 const LionSvgIcon = styled('img')({
-  width: '50px', // Adjust the size as needed
-  height: '50px', // Adjust the size as needed
-  marginRight: '10px', // Add margin to separate the icon from text
-  marginTop: '-30px',
-  fill: '#DF8530'
-
+  width: '50px',
+  height: '50px',
+  marginRight: '10px',
 });
-
-
-
 
 const LionCount = styled(CountUp)({
-  fontSize: "36px",
+  fontSize: "1.8rem",
   color: "#8E5315",
-  textAlign: "center",
 });
 
-
-
-
-
+// **Dashboard Component**
 const Dashboard = () => {
-  const fileInputRef = React.useRef(null);
-
-  const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      console.log("Selected file:", file.name);
-    }
-  };
-
-  const pieChartData = [
-    { name: 'Male', value: 75 },
-    { name: 'Female', value: 25 },
-  ];
-
-  const StyledPieCard = styled(Card)({
-    backgroundColor: 'white',
-    marginTop: '20px',
-    width: '400px',
-    marginLeft: '235px', // Adjusted marginLeft value
-    padding: '20px',
-  });
-
-  const StyledPieChart = styled(PieChart)({
-    marginTop: '20px',
-    width: '350px',
-    height: '350px',
-  });
-
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    const RADIAN = Math.PI / 180;
-    const radius = 25 + innerRadius + (outerRadius - innerRadius);
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
-  };
+  const isSmallScreen = useMediaQuery('(max-width: 768px)');
+  const isLargeScreen = useMediaQuery('(min-width: 1200px)'); // Detects large screens
 
   return (
-    <div>
+    <StyledContainer isSmallScreen={isSmallScreen} isLargeScreen={isLargeScreen}>
       <StyledH1 variant="h1">Dashboard</StyledH1>
       <StyledH2 variant="h2">Lions Identified</StyledH2>
 
-
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginLeft:'202px' }}>
+      {/* Lion Data Cards */}
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: '20px',
+        marginBottom: '20px',
+      }}>
         {lionData.map((lion, index) => (
-          <StyledLionCard key={index}>
+          <StyledCard key={index} style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '250px',
+            textAlign: 'center',
+          }}>
             <LionSvgIcon src={LionIcon} alt="Lion Icon" />
             <div>
-              <Typography variant="h6" align="left" style={{ margin: '0' }}>
-                {lion.category}
-              </Typography>
+              <Typography variant="h6">{lion.category}</Typography>
               <LionCount start={0} end={lion.count} duration={2} separator="," />
             </div>
-          </StyledLionCard>
+          </StyledCard>
         ))}
       </div>
 
-
+      {/* Upload Button */}
       <StyledButton
         variant="contained"
-        color="primary"
-        startIcon={<StyledArrowCircleUpIcon style={{ fontSize: 60 }} />}
-        onClick={handleButtonClick}
+        startIcon={<ArrowCircleUpIcon style={{ fontSize: 40 }} />}
       >
         Upload Images for Identification
       </StyledButton>
 
-       <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-        onChange={handleFileChange}
-      />
-
-
-      <div style={{ display: 'flex', justifyContent: 'center'}}>
-        <StyledPieCard>
-          <Typography variant="h6" align="center" style={{ marginBottom: '10px',color: '#6A3E10' }}>
+      {/* Graphs Layout */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isLargeScreen ? '1fr 1fr' : '1fr',
+        gap: '20px',
+        justifyContent: 'center',
+        marginBottom: '20px',
+      }}>
+        {/* Pie Chart Card */}
+        <StyledCard>
+          <Typography variant="h6" align="center" style={{ color: '#6A3E10' }}>
             Gender Distribution
           </Typography>
-          <StyledPieChart width={350} height={250}>
+          <PieChart width={isSmallScreen ? 300 : 350} height={isSmallScreen ? 250 : 300}>
             <Pie
               data={pieChartData}
               dataKey="value"
               nameKey="name"
               cx="50%"
               cy="50%"
-              outerRadius={100}
-              label={renderCustomizedLabel}
+              outerRadius={isSmallScreen ? 80 : 100}
+              label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
             >
-              {
-                pieChartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={index === 0 ? '#DF8530' :'#EDDDCC'} />
-                ))
-              }
-              <Label
-                position="outside"
-                style={{ fontSize: '14px', fontWeight: 'bold' }}
-                content={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-              />
+              {pieChartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={index === 0 ? '#DF8530' : '#EDDDCC'} />
+              ))}
             </Pie>
             <Tooltip />
-          </StyledPieChart>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ width: '10px', height: '10px', backgroundColor: '#DF8530', marginRight: '5px' }}></div>
-              <Typography variant="subtitle1">Male</Typography>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ width: '10px', height: '10px', backgroundColor: '#EDDDCC', marginRight: '5px' }}></div>
-              <Typography variant="subtitle1">Female</Typography>
-            </div>
-          </div>
-        </StyledPieCard>
+          </PieChart>
+        </StyledCard>
 
-        <StyledCard style={{ marginLeft: '50px', width:'450px', }}>
-          <Typography variant="h6" align="left" style={{ marginBottom: '10px',color: '#6A3E10'}}>
+        {/* Line Chart Card */}
+        <StyledCard>
+          <Typography variant="h6" align="center" style={{ color: '#6A3E10' }}>
             Model Performance
           </Typography>
-
-          <LineChart width={450} height={350} data={data}>
+          <LineChart width={isSmallScreen ? 300 : 450} height={isSmallScreen ? 250 : 300} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="age" label={{ value: 'Size of Data', position: 'insideBottom', offset: -3 }} />
-            <YAxis
-              label={{
-                value: 'Accuracy',
-                angle: -90,
-                position: 'insideLeft',
-                offset: 10
-              }}
-              ticks={[0, 10, 20, 30, 40, 50, 60, 70]}
-            />
+            <XAxis dataKey="age" />
+            <YAxis />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="count" stroke="#8884d8" />
@@ -262,29 +170,21 @@ const Dashboard = () => {
         </StyledCard>
       </div>
 
-      <StyledCard style={{ marginTop: '50px', width: '940px', height: '500px' }}>
-        <Typography variant="h6" align="left" style={{ marginBottom: '-30px',color: '#6A3E10' }}>
+      {/* Bar Chart */}
+      <StyledCard style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
+        <Typography variant="h6" align="center" style={{ color: '#6A3E10' }}>
           Age Distribution
         </Typography>
-
-        <StyledBarChart width={890} height={400} data={data}>
+        <BarChart width={isSmallScreen ? 350 : 800} height={isSmallScreen ? 250 : 400} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="age" label={{ value: 'Age at Onset (Years)', position: 'insideBottom', offset: -3 }} />
-          <YAxis
-            label={{
-              value: 'Number of Lions',
-              angle: -90,
-              position: 'insideLeft',
-              offset: 10
-            }}
-            ticks={[0, 5, 10, 15, 20, 25, 30]}
-          />
+          <XAxis dataKey="age" />
+          <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" fill="#FF7F00" barSize={20} />
-        </StyledBarChart>
+          <Bar dataKey="count" fill="#FF7F00" barSize={isSmallScreen ? 15 : 20} />
+        </BarChart>
       </StyledCard>
-    </div>
+    </StyledContainer>
   );
 };
 
