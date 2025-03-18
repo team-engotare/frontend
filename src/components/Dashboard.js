@@ -1,10 +1,14 @@
 import React from "react";
+import  { useRef, useState }  from 'react';
 import { styled } from '@mui/system';
 import { Typography, Button, Card, useMediaQuery } from '@mui/material';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import LionIcon from '../components/images/lionn.svg';
 import CountUp from "react-countup";
+import axios from 'axios';
+import FeatureGrid from "./FeatureGrid"; 
+
 
 // Sample Data
 const data = [
@@ -80,10 +84,57 @@ const LionCount = styled(CountUp)({
   color: "#8E5315",
 });
 
+const mockResponse = [
+  { label: "Left Eye", path: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?text=Left+Eye" },
+  { label: "Right Eye", path: "https://images.unsplash.com/photo-1550699566-83f93df24072?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGxpb24lMjBleWVzfGVufDB8fDB8fHww?text=Right+Eye" },
+  { label: "Nose", path: "https://plus.unsplash.com/premium_photo-1664303401706-675400190f8a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bGlvbiUyMHdoaXNrZXJzfGVufDB8fDB8fHww?text=Nose" },
+  { label: "Teeth", path: "https://plus.unsplash.com/premium_photo-1664302706067-947bee391a58?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGxpb24lMjB3aGlza2Vyc3xlbnwwfHwwfHx8MA%3D%3D?text=Teeth" },
+];
+
 // **Dashboard Component**
 const Dashboard = () => {
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
   const isLargeScreen = useMediaQuery('(min-width: 1200px)'); // Detects large screens
+  const [ features, setFeatures ] =  useState([])
+  const inputRef = useRef(null);
+
+  const  handleFileUpload = async (e) =>  {
+    const files = e.target.files;
+    if (!files) return;
+
+    const file = files[0];
+    const formData = new FormData();
+    formData.append("image", file); 
+
+    try {
+      // const response = await axios.post(process.env.ML_API, formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // });
+
+
+
+      // console.log("Upload successful:", response.data);
+      setTimeout(() => { //using dummy data as an example of how results can look like
+        console.log("Mock upload successful:", mockResponse);
+        setFeatures(mockResponse);
+      }, 1000); 
+      // setFeatures(response.data.features);
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
+  
+    console.log(file);
+  }
+
+  function handleButtonClick(e) {
+    e.preventDefault();
+    console.log('clicked');
+    if (!inputRef || !inputRef.current) return;
+    console.log("indine")
+    inputRef.current.click();
+  }
 
   return (
     <StyledContainer isSmallScreen={isSmallScreen} isLargeScreen={isLargeScreen}>
@@ -118,11 +169,14 @@ const Dashboard = () => {
       {/* Upload Button */}
       <StyledButton
         variant="contained"
-        startIcon={<ArrowCircleUpIcon style={{ fontSize: 40 }} />}
-      >
+        startIcon={<ArrowCircleUpIcon style={{ fontSize: 40 }}   />}
+        onClick={handleButtonClick}>
         Upload Images for Identification
       </StyledButton>
-
+      <input ref={inputRef} type='file' hidden onChange={handleFileUpload} />
+     
+     {/* {display the results} */}
+     {features.length > 0 && <FeatureGrid features={features} />}
       {/* Graphs Layout */}
       <div style={{
         display: 'grid',
